@@ -41,6 +41,7 @@ parser.add_argument('-lbn', '--library_name', action='store', default='',
 p = parser.parse_args()
 
 # Edit user@email.com and shows
+# If the title has a ' in it, leave it out EXAMPLE: Grey's Anatomy -> Greys Anatomy
 users = [{'email': 'user1@gmail.com',
           'shows': ('show1', 'show2')
           },
@@ -52,13 +53,13 @@ users = [{'email': 'user1@gmail.com',
           }]
           
 # Kill script now if show_name is not in lists
-too = list('Match' for u in users if p.show_name in u['shows'])
+too = list('Match' for u in users if p.show_name.replace("'","") in u['shows'])
 if not too:
 	print 'Kill script now show_name is not in lists'
 	exit()
 
 # Join email addresses
-to = list([u['email'] for u in users if p.show_name in u['shows']])
+to = list([u['email'] for u in users if p.show_name.replace("'","") in u['shows']])
 
 # Email settings
 name = 'PlexPy' # Your name
